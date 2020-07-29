@@ -1,0 +1,23 @@
+.nameSelection {
+    margin-top: 20%;
+}
+
+.nameSelection > h1 {
+    font-size: 22px;
+}
+
+.nameSelection__inputForm {
+    background-color: #fafafa !important;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 8px;
+    box-shadow: -2px 2px 15px 0 rgba(0,0,0,.1) !important;
+}
+
+.nameSelection__inputFormInput {
+    flex: 1;
+}
+
+.nameSelection__inputFormButton {
+    padding: 8px;
+}

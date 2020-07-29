@@ -1,0 +1,53 @@
+.chatBaloon {
+    position: relative;
+    background-color: #63c6ff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    align-self: flex-start;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+.chatBaloon::before {
+    content: '';
+    position: absolute;
+    background-color: #63c6ff;
+    width: 10px;
+    height: 10px;
+    left: -5px;
+    top: calc( 50% - 5px );
+    transform: rotate(45deg);
+}
+.chatBaloon--friend {
+    background-color: #ffd466;
+    align-self: flex-end;
+    margin-bottom: 28px;
+}
+.chatBaloon--friend::before {
+    left: unset;
+    right: -5px;
+    background-color: #ffd466;
+}
+.chatBaloon__message {
+    text-align: left;
+    font-size: 16px;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+.chatBaloon__message--friend {
+    text-align: right;
+}
+.chatBaloon__author {
+    position: absolute;
+    text-align: right;
+    bottom: -24px;
+    right: 6px;
+    font-weight: bold;
+    text-align: right;
+}

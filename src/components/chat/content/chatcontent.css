@@ -1,0 +1,49 @@
+.chatContent {
+    flex: 1;
+    overflow-y: scroll;
+}
+.chatMessages {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px
+}
+.chatContainer {
+    position: relative;
+    background-color: #63c6ff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.chatMessage {
+    width: 100%;
+    text-align: left;
+}
+
+.chatBaloon-enter {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.chatBaloon-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+.chatBaloon-leave {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.chatBaloon-leave-active {
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
