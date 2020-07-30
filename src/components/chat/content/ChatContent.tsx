@@ -7,9 +7,8 @@ import "./chatcontent.css";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 export default function ChatContent() {
-    const chats = useChatLayer();
     const author = useSelector(authorSelector);
-    console.log(chats);
+    const [chats, connectionStatus] = useChatLayer(author);
     const chatContainer = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -18,29 +17,37 @@ export default function ChatContent() {
         }
     }, [chats]);
 
-    return (
-        <div className="chatContent" ref={chatContainer}>
-        {
-        chats.length > 0 ?
-            <div>
-                <TransitionGroup
-                    className="chatMessages" >
-                    {chats.map((item, i) => (
-                        <CSSTransition
-                            key={i}
-                            timeout={100}
-                            classNames="chatBaloon"
-                            component={null} >
-                            <ChatItem key={i} item={item} author={author}/>
-                        </CSSTransition>
-                    ))}
-                </TransitionGroup>
+    if(connectionStatus) {
+        return (
+            <div className="chatContent" ref={chatContainer}>
+            {
+            chats.length > 0 ?
+                <div>
+                    <TransitionGroup
+                        className="chatMessages" >
+                        {chats.map((item, i) => (
+                            <CSSTransition
+                                key={i}
+                                timeout={100}
+                                classNames="chatBaloon"
+                                component={null} >
+                                <ChatItem key={i} item={item} author={author}/>
+                            </CSSTransition>
+                        ))}
+                    </TransitionGroup>
+                </div>
+            :
+                <div className="chatContainer">
+                    <div className="chatContainer__message">Inizia scrivendo qualcosa...</div>
+                </div>
+            }
             </div>
-        :
-            <div className="chatContainer">
-                <div className="chatMessage__message">Inizia scrivendo qualcosa...</div>
-            </div>
-        }
-        </div>
         );
+    } else {
+        return (
+            <div className="chatContainer chatContainer--disconnected">
+                <div className="chatContainer__message">Connessione in corso...</div>
+            </div>
+        );
+    }
 }

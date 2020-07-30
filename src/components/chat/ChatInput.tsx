@@ -23,7 +23,6 @@ export default function ChatInput() {
 
     const messageSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log(chatMessage);
         if(chatMessage) {
             let joke = false;
             if(messagesCount === 0 && chatMessage.toLowerCase().trim() === 'qualcosa') {

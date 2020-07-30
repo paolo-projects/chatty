@@ -48,6 +48,7 @@
     text-align: right;
     bottom: -24px;
     right: 6px;
+    width: 100vh;
     font-weight: bold;
     text-align: right;
 }
