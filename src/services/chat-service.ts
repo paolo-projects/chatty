@@ -36,8 +36,6 @@ class ChatService {
         this.socket.on('connect', () => this.emitConnectionStatus(true));
         this.socket.on('disconnect', () => this.emitConnectionStatus(false));
         this.socket.on('reconnect', () => this.emitConnectionStatus(true));
-
-        this.connected = true;
     }
 
     subscribe<T extends keyof Event>(event: T, receiver: Event[T]) {
@@ -85,8 +83,6 @@ class ChatService {
         this.socket.on('connect', () => this.emitConnectionStatus(true));
         this.socket.on('disconnect', () => this.emitConnectionStatus(false));
         this.socket.on('reconnect', () => this.emitConnectionStatus(true));
-
-        this.connected = true;
     }
 
     terminate() {
@@ -97,6 +93,7 @@ class ChatService {
     }
 
     private emitConnectionStatus(connected: boolean) {
+        this.connected = connected;
         this.connectionStatusListeners.forEach(receiver => receiver(connected));
     }
 

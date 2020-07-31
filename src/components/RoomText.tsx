@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton } from '@material-ui/core';
 import { clearChatEntries } from '../data/actions/chat';
 import { setAuthor } from '../data/actions/author';
+import chatService from '../services/chat-service';
 
 export default function RoomText() {
   const author = useSelector(authorSelector);
@@ -14,6 +15,7 @@ export default function RoomText() {
   const resetClick = () => {
     dispatch(clearChatEntries());
     dispatch(setAuthor(''));
+    chatService.terminate();
   };
 
   return (

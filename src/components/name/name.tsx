@@ -3,22 +3,24 @@ import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
 import { useDispatch } from 'react-redux';
 import { setAuthor } from '../../data/actions/author';
-import { Paper, InputBase, CircularProgress } from '@material-ui/core';
+import { Paper, InputBase, CircularProgress, Snackbar } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import "./name.css";
 import chatService from '../../services/chat-service';
 
 export default function NameSelection() {
     const [progress, setProgress] = useState(false);
+    const [error, setError] = useState(false);
     const [name, setName] = useState('');
     const dispatch = useDispatch();
 
     const confirmNameSelection = (e: FormEvent) => {
         e.preventDefault();
-        setProgress(true);
         if(name.length > 1) {
+            setProgress(true);
             dispatch(setAuthor(name.trim().slice(0, 20)));
             chatService.reset(name);
-        }
+        } else setError(true);
     }
 
     return (
@@ -40,6 +42,14 @@ export default function NameSelection() {
                     </form>
                 ) }
             </div>
+            <Snackbar open={error} autoHideDuration={3000} onClose={() => setError(false)}>
+                <div style={{backgroundColor:'red', color:'white', padding:'16px', borderRadius:'5px'}}>
+                    Inserisci un nome valido
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={() => setError(false)}>
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                </div>
+            </Snackbar>
         </div>
     );
 }
