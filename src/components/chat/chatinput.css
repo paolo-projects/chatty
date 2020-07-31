@@ -5,6 +5,7 @@
     padding: 2px 4px;
     align-items: center;
     box-shadow: -2px 2px 15px 0 rgba(0,0,0,.1) !important;
+    z-index: 99;
 }
 
 .chatInput__input {

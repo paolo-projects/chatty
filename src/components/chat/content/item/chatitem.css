@@ -1,5 +1,19 @@
+.chatBaloon__container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.chatBaloon__container--friend {
+    justify-content: flex-end;
+    margin-bottom: 28px;
+}
+
 .chatBaloon {
     position: relative;
+    width: fit-content;
     background-color: #63c6ff;
     border-radius: 5px;
     display: flex;
@@ -11,8 +25,8 @@
     margin-top: 4px;
     margin-bottom: 4px;
     align-self: flex-start;
-    box-sizing: border-box;
     max-width: 100%;
+    box-sizing: border-box;
 }
 .chatBaloon::before {
     content: '';
@@ -27,7 +41,6 @@
 .chatBaloon--friend {
     background-color: #ffd466;
     align-self: flex-end;
-    margin-bottom: 28px;
 }
 .chatBaloon--friend::before {
     left: unset;
@@ -48,7 +61,7 @@
     text-align: right;
     bottom: -24px;
     right: 6px;
-    width: 100vh;
+    margin-right: 5px;
     font-weight: bold;
     text-align: right;
 }

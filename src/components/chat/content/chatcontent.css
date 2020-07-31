@@ -1,12 +1,13 @@
 .chatContent {
     flex: 1;
     overflow-y: scroll;
+    height: 100%;
 }
 .chatMessages {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px
+    margin: 8px 0;
 }
 .chatContainer {
     position: relative;

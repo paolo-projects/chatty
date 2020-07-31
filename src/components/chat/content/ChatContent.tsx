@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useChatLayer } from '../../../services/hooks';
+import { useChatMessages, useChatStatus } from '../../../services/hooks';
 import ChatItem from './item/ChatItem';
 import { useSelector } from 'react-redux';
 import { authorSelector } from '../../../data/selectors/author';
@@ -8,7 +8,8 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 export default function ChatContent() {
     const author = useSelector(authorSelector);
-    const [chats, connectionStatus] = useChatLayer(author);
+    const chats = useChatMessages();
+    const connectionStatus = useChatStatus();
     const chatContainer = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

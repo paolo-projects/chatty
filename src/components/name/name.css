@@ -1,5 +1,16 @@
 .nameSelection {
-    margin-top: 20%;
+    padding: 20px;
+    height: 100%;
+}
+
+.nameSelection__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.nameSelection__container > form {
+    width: 100%;
 }
 
 .nameSelection > h1 {
@@ -7,6 +18,7 @@
 }
 
 .nameSelection__inputForm {
+    width: 100%;
     background-color: #fafafa !important;
     display: flex;
     flex-flow: row wrap;

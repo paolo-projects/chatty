@@ -1,0 +1,74 @@
+.mobileMenu {
+    display: none;
+    background-color: #f0f0f0;
+    padding: 4px;
+}
+
+.connectedClientsContainer {
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    height: 100%;
+}
+
+.connectedClientsContainer > h3 {
+    margin: 0;
+}
+
+.connectedClientsContainer > ul {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.connectedClientsContainer > ul > li:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+}
+
+.connectedClients__client {
+    padding: 8px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.client__name {
+    font-size: 14px;
+    padding: 4px;
+}
+
+.client__hash {
+    display:none;
+    font-size: 12px;
+    color: #666;
+    padding: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 800px) {
+    .mobileMenu {
+        display: block;
+    }
+    .connectedClientsContainer {
+        visibility: hidden;
+        height: 0;
+        padding: 0 16px;
+        max-height: 0;
+        opacity: 0;
+
+        transition: max-height .3s ease-in, opacity .3s ease-in;
+    }
+    .connectedClientsContainer.mobileShow {
+        visibility: visible;
+        height: auto;
+        max-height: 2000px;
+        opacity: 1;
+    }
+    .client__hash {
+        display: block;
+    }
+}

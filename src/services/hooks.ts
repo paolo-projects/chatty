@@ -2,47 +2,69 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { messagesSelector } from "../data/selectors/chat";
 import { addChatEntry } from "../data/actions/chat";
-import ChatService, { Receiver } from "./chat-service";
+import ChatService from "./chat-service";
 import { ChatEntry } from "../data/state/chat";
+import ConnectedClient from "./client/ConnectedClient";
 
-let chatService: ChatService;
-
-export function useChatLayer(name: string): [ChatEntry[], boolean] {
-    const [connectionStatus, setConnectionStatus] = useState(false);
-    const chatLayer = useSelector(messagesSelector);
+export function useChatMessages(): ChatEntry[] {
+    const chatMessages = useSelector(messagesSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(!chatService) {
-            chatService = new ChatService(name);
-        } else {
-            chatService.reset(name);
-        }
-    }, [name]);
-
-    useEffect(() => {
-        const update = {
-            onMessage: (message: string, author: string) => {
-                dispatch(addChatEntry(message, author));
-            },
-            onConnectionStatusChange: (connected: boolean) => {
-                setConnectionStatus(connected);
-            }
-        } as Receiver;
-
-        chatService.subscribe(update);
-        return () => {
-            chatService.unsubscribe(update);
+        const addChat = (content: string, author: string) => {
+            dispatch(addChatEntry(content, author));
         };
+
+        ChatService.subscribe('message', addChat);
+
+        return () => {
+            ChatService.unsubscribe('message', addChat);
+        }
     }, [dispatch]);
 
-    return [chatLayer, connectionStatus];
+    return chatMessages;
+}
+
+export function useChatStatus(): boolean {
+    const [status, setStatus] = useState(ChatService.connected);
+
+    useEffect(() => {
+        const setConnectionStatus = (status: boolean) => {
+            setStatus(status);
+        };
+
+        ChatService.subscribe('connectionstatus', setConnectionStatus);
+
+        return () => {
+            ChatService.unsubscribe('connectionstatus', setConnectionStatus);
+        }
+    }, []);
+
+    return status;
+}
+
+export function useConnectedClients() {
+    const [clients, setClients] = useState([] as ConnectedClient[]);
+
+    useEffect(() => {
+        const updateClients = (clients: ConnectedClient[]) => {
+            setClients(clients);
+        };
+
+        ChatService.subscribe('clients', updateClients);
+
+        return () => {
+            ChatService.unsubscribe('clients', updateClients);
+        };
+    }, []);
+
+    return clients;
 }
 
 export function useSendMessage() {
     return async (message: string, author: string) => {
-        if(chatService) {
-            chatService.sendMessage(message, author);
+        if(ChatService) {
+            ChatService.sendMessage(message, author);
         }
     }
 }
