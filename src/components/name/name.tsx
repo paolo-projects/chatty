@@ -10,8 +10,7 @@ import chatService from '../../services/chat-service';
 
 export default function NameSelection() {
     const [progress, setProgress] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState('');
     const [name, setName] = useState('');
     const dispatch = useDispatch();
 
@@ -22,16 +21,14 @@ export default function NameSelection() {
             dispatch(setAuthor(name.trim().slice(0, 20)));
             chatService.reset(name, (error) => {
                 if(error === 'name_taken') {
-                    setErrorMsg('Il nome scelto è già in uso')
+                    setError('Il nome scelto è già in uso')
                 } else {
-                    setErrorMsg('Si è verificato un errore');
+                    setError('Si è verificato un errore');
                 }
-                setError(true);
                 setProgress(false);
             });
         } else {
-            setErrorMsg('Inserisci un nome valido');
-            setError(true);
+            setError('Inserisci un nome valido');
         }
     }
 
@@ -54,10 +51,10 @@ export default function NameSelection() {
                     </form>
                 ) }
             </div>
-            <Snackbar open={error} autoHideDuration={3000} onClose={() => setError(false)}>
+            <Snackbar open={error?.length > 0} autoHideDuration={3000} onClose={() => setError('')}>
                 <div style={{backgroundColor:'red', color:'white', padding:'16px', borderRadius:'5px'}}>
-                    {errorMsg}
-                    <IconButton size="small" aria-label="close" color="inherit" onClick={() => setError(false)}>
+                    {error}
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={() => setError('')}>
                         <CloseIcon fontSize="small" />
                     </IconButton>
                 </div>
