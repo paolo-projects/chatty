@@ -24,7 +24,7 @@ class ChatService {
     name?: string;
     connected: boolean = false;
 
-    connect(name: string) {
+    connect(name: string, error: (error:any) => void) {
         this.name = name;
         this.socket = socketIo(GlobalConfig.chatServerUri, {
             query: {
@@ -36,6 +36,7 @@ class ChatService {
         this.socket.on('connect', () => this.emitConnectionStatus(true));
         this.socket.on('disconnect', () => this.emitConnectionStatus(false));
         this.socket.on('reconnect', () => this.emitConnectionStatus(true));
+        this.socket.on('error', error);
     }
 
     subscribe<T extends keyof Event>(event: T, receiver: Event[T]) {
@@ -70,19 +71,11 @@ class ChatService {
         this.socket?.emit('chat_message', content);
     }
 
-    reset(name: string) {
+    reset(name: string, error: (error: any) => void) {
         this.name = name;
         this.socket?.close();
-        this.socket = socketIo(GlobalConfig.chatServerUri, {
-            query: {
-                author: name
-            }
-        });
-        this.socket.on('chat_message', (msg: string) => this.parseSocketMessage(msg));
-        this.socket.on('connected_clients', (clients: string) => this.parseClients(clients));
-        this.socket.on('connect', () => this.emitConnectionStatus(true));
-        this.socket.on('disconnect', () => this.emitConnectionStatus(false));
-        this.socket.on('reconnect', () => this.emitConnectionStatus(true));
+
+        this.connect(name, error);
     }
 
     terminate() {
